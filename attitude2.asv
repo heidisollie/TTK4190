@@ -1,0 +1,75 @@
+%% USER INPUTS
+h = 0.1;                     % sample time (s)
+N  = 200;                    % number of samples
+
+% model parameters
+k_p = 10;
+k_d = 300;
+K_d = [k_d  0    0;
+        0  k_d   0;
+        0   0   k_d];
+    
+m = 100;
+r = 2;
+I = diag([m*r^2 m*r^2 m*r^2]);       % inertia matrix
+I_inv = inv(I);
+
+% constants
+deg2rad = pi/180;   
+rad2deg = 180/pi;
+
+phi = 10*deg2rad;               % initial Euler angles
+theta = -5*deg2rad;
+psi = 15*deg2rad;
+
+q = euler2q(phi,theta,psi);   % transform initial Euler angles to q
+
+w = [0 0 0]';                 % initial angular rates
+
+table = zeros(N+1,14);                      % memory allocation
+
+
+%% FOR-END LOOP
+for i = 1:N+1,
+   t = (i-1)*h;    % time 
+   
+   phi_ref = 10*sin(0.1*t)*deg2rad;
+   theta_ref = 0; 
+   psi_ref = 15*cos(0.05*t)*deg2rad;
+   q_ref = euler2q(phi_ref, theta_ref, psi_ref);
+   
+   q_ref_conj = quatconj(q_ref');         % quaternion conjugate 
+   q_err = quatmultiply(q_ref_conj, q);   % quaternion product
+   
+   tau = -K_d * w - k_p *q(2:end);        % control law
+   
+   
+   [J,J1,J2] = quatern(q);       % kinematic transformation matrices
+
+   q_dot = J2*w;                        % quaternion kinematics
+   w_dot = I_inv*(Smtrx(I*w)*w + tau);  % rigid-body kinetics
+
+   table(i,:) = [t q' phi theta psi w' tau'];  % store data in table
+   
+   q = q + h*q_dot;	             % Euler integration
+   w = w + h*w_dot;
+   
+   q  = q/norm(q);               % unit quaternion normalization
+end 
+
+%% PLOT FIGURES
+t       = table(:,1);  
+q       = table(:,2:5); 
+phi     = rad2deg*table(:,6);
+theta   = rad2deg*table(:,7);
+psi     = rad2deg*table(:,8);
+w       = rad2deg*table(:,9:11);  
+tau     = table(:,12:14);
+clf
+figure(1)
+subplot(411),plot(t,phi),xlabel('time (s)'),ylabel('deg'),title('\phi'),grid
+subplot(412),plot(t,theta),xlabel('time (s)'),ylabel('deg'),title('\theta'),grid
+subplot(413),plot(t,psi),xlabel('time (s)'),ylabel('deg'),title('\psi'),grid
+subplot(414),plot(t,w),xlabel('time (s)'),ylabel('deg/s'),title('w'),grid, legend('w_1', 'w_2', 'w_3')
+figure(2)
+subplot(111),plot(t,tau),xlabel('time (s)'),ylabel('Nm'),title('\tau'),grid, legend('\tau_1', '\tau_2', '\tau_3')

@@ -1,0 +1,45 @@
+\section{Modifying the controller}
+
+We wish to calculate the quaternion error $\tilde{q}$ between the desired quaternion $q_d$ and the current state $q$ when $q = q_d \Rightarrow [\eta,\epsilon_1,\epsilon_2,\epsilon_3]^T = [\eta_d,\epsilon_{d,1},\epsilon_{d,2},\epsilon_{d,3}]^T$:
+
+\begin{equations}
+    \begin{align*}
+        \tilde{q} = \bar{q} \otimes q &=
+        \begin{bmatrix}
+            \eta_d\eta - (-\epsilon_d^T\epsilon)\\
+            \eta_d\epsilon - \eta\epsilon_d + S(-\epsilon_d)\epsilon
+        \end{bmatrix}\\
+        &=
+        \begin{bmatrix}
+            \eta\eta + \epsilon^T\epsilon\\
+            \eta\epsilon - \eta\epsilon + S(-\epsilon)\epsilon
+        \end{bmatrix}\\
+        &=
+        \begin{bmatrix}
+            1 - \epsilon_d^T\epsilon + \epsilon_d^T\epsilon\\
+            \eta\epsilon - \eta\epsilon + S(-\epsilon)\epsilon
+        \end{bmatrix}\\
+        &=
+        \begin{bmatrix}
+            1 - \text{\sout{$\epsilon_d^T\epsilon + \epsilon_d^T\epsilon$}}\\
+            \text{\sout{$\eta\epsilon - \eta\epsilon$}} + \text{\sout{$S(-\epsilon)\epsilon$}}
+        \end{bmatrix}\\
+        &=\quad
+        \begin{bmatrix}
+            \tilde\eta\\
+            \tilde\epsilon_1\\
+            \tilde\epsilon_2\\
+            \tilde\epsilon_3\\
+        \end{bmatrix}
+        =
+        \begin{bmatrix}
+            1\\
+            0\\
+            0\\
+            0\\
+        \end{bmatrix}
+    \end{align*}
+\end{equations}
+
+After convergence, $q = q_d$, the error is as expected null and $\eta$ is per definition equal to one.
+

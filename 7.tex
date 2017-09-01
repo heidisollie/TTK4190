@@ -1,0 +1,45 @@
+\section*{Problem 1.7}
+
+$$ \dot{\tilde \eta} = -\frac{1}{2} \tilde \epsilon^\top \tilde \omega $$
+$$\tilde \omega = \omega - \omega_d, \tilde \epsilon = \epsilon - \epsilon_d $$
+$$ \omega_d = 0, \epsilon_d = \text{constant}, \eta_d = \text{constant}, \tau = 0 $$
+$$ \tau = -\mathbf{K}_d \omega - k_p \tilde \epsilon $$
+\\ \\ Consider $V = \frac{1}{2} {\tilde \omega}^\top \mathbf{I}_{CG} \tilde \omega + 2k_p(1 - \tilde \eta)$
+\\ By using the fact that $\mathbf{I}_{CG} = mr^2 \mathbf{I}_3 > 0$ and $\tilde \eta = \cos{\frac{\beta}{2}}$ we know that $\frac{1}{2} \tilde \omega^\top \mathbf{I}_{CG} \tilde \omega > 0$ and that $\tilde \eta \in [-1,1] \Rightarrow 2k_p(1 - \tilde \eta) \geq 0.$
+\\ $\Rightarrow V \geq 0.$
+
+\\ To explain how $V$ is unbounded we will look at $\frac{1}{2} \tilde \omega^\top \mathbf{I}_{CG} \tilde \omega.$ This increases towards infinity as $\tilde \omega$ (and therefore $\omega$) increases. Making the function unbounded.
+\begin{align*}
+ \dot V &= \tilde \omega^\top  \mathbf{I}_{CG} \dot{\tilde \omega} - 2k_p\dot{\tilde \eta} \\
+    &=  \omega^\top  \mathbf{I}_{CG}\dot{ \omega} - 2k_p\dot{\tilde \eta}\\
+    &=   \omega^\top  \mathbf{I}_{CG}(\mathbf{I}_{CG}^{-1} \tau) - 2k_p(-\frac{1}{2} \tilde \epsilon^\top \tilde \omega) \\
+    &= \omega^\top  \tau - 2k_p(-\frac{1}{2} \tilde \epsilon^\top \omega) \\
+    &= \omega^\top  (-\mathbf{K_d}\omega - k_p \tilde \epsilon) - 2k_p(-\frac{1}{2} \tilde \epsilon^\top  \omega) \\
+    &= -\omega^\top \mathbf{K_d} \omega - \omega^\top k_p \tilde \epsilon + k_p \tilde \epsilon^\top \omega \\
+    &= -\omega^\top \mathbf{K_d} \omega \\
+    &= -\omega^\top \m{-k_d && 0 && 0 \\ 0 && -k_d && 0 \\ 0 && 0 && -k_d} \omega \\
+    &= -k_d \omega^\top \omega \qed
+\end{align*}
+\\ \\ 
+
+Barbalat's Lemma allows for the following result. If there exists a uniformly continuous function $V: \mathbb{R}^n \rightarrow \mathbb{R}$ satisfying the following conditions:
+
+\begin{enumerate}  
+\item $V(x) \geq 0$
+\item $\dot V(x) \leq 0$
+\item $\dot V(x)$ is uniformly continuous 
+\end{enumerate}
+
+Then, according to Barbalat's lemma, $\lim_{t \rightarrow \infty} \dot V(x) = 0$. \\
+Note: $\ddot V(x)$ is bounded $\Rightarrow \dot{V}(x)$ is uniformly continuous
+
+\\We showed that (1) is fulfilled above. (2) is obvious, since $k_d > 0$. (3) we will show by showing that $\ddot V(x)$ is bounded.
+
+\\ $\ddot V(x) = -2k_d \omega^\top \dot \omega$. We cannot mathematically show that this function is bounded. However, if we consider the physical aspects of the system, we know that the function $V$ represent the energy in the system. We also know that the energy cannot begin at infinity. So we know that $V(x)$ will begin at a constant and then decrease towards $0$. Therefore $\ddot V(x)$ must be  bounded.
+\\ \\ To show asymptotic stability we will use the following theorem: \\
+\textbf{Theorem 4.1}: Let $x = 0$ be an equilibrium point of our system, and $D \in \mathbb{R}^n$ be a domain containing $x = 0$. \\
+Let $V: D \rightarrow \mathbb{R}^n$ be a continuously differentiable function such that: \\
+$V(0) = 0,  V(x) > 0 \in D - {0}$\\
+$\dot V(x) < 0 \in D - {0}$\\
+Then the equilibrium point is asymptotically stable.
+\\ The system is only stable if there is no other equilibrium point or if the other equilibrium points are stable as well.
