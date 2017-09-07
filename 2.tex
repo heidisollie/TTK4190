@@ -1,49 +1,56 @@
 \section{Introducing the first controller}
-
-We wish to include a controller matrix K in the expression of $\dot{x}$ such that:
-
+ 
+Now we will consider the attitude control law
 \begin{equation*}
-    \dot{x} = Ax + B\tau = (A - BK) x
+    \boldsymbol{\tau} = -\mathbf{K}_d \boldsymbol{\omega} - k_p \boldsymbol{\epsilon}, \mathbf{K_d} = k_d \mathbf{I}_3, k_p > 0, k_d > 0
 \end{equation*}
-
-To find K, we need to solve $\tau = Kx$:
-
+Let $k_d = 20$, $k_p = 1$. \\
+To make things easier, intuitively, we will write the law on the form $\boldsymbol{\tau} = \mathbf{-Kx}$
 \begin{equations}
     \begin{align*}
-        -Kx &= -K_d\omega -k_p\epsilon\\
+        -\mathbf{Kx} &= -\mathbf{K_d} \boldsymbol{\omega} -k_p\boldsymbol{\epsilon}\\
         &=
         \begin{bmatrix}
-            -20\omega_1 -\epsilon_1\\
-            -20\omega_2 -\epsilon_2\\
-            -20\omega_3 -\epsilon_3
+            -k_d\omega_1 -k_p\epsilon_1\\
+            -k_d\omega_2 -k_p\epsilon_2\\
+            -k_d\omega_3 -k_p\epsilon_3
         \end{bmatrix}\\
-        \Rightarrow K &=
+        \Rightarrow \mathbf{K} &=
         \begin{bmatrix}
-            20  &   0   &   0   &   1   &   0   &   0\\
-            0   &   20  &   0   &   0   &   1   &   0\\
-            0   &   0   &   20  &   0   &   0   &   1\\
+            k_d  &   0   &   0   &   k_p   &   0   &   0\\
+            0   &   k_d  &   0   &   0   &   k_p   &   0\\
+            0   &   0   &   k_d  &   0   &   0   &   k_p\\
         \end{bmatrix}
     \end{align*}
-\end{equations}
+\end{equations} \\
 
-To verify that the closed-loop system is stable, we need to verify if the eigenvalues of $A-BK$ are in the left half-plane of the complex plane:
+If we insert this result into our linearized model we get
+\begin{equation*}
+    \mathbf{\dot x} = \mathbf{Ax+B}\boldsymbol{\tau} = \mathbf{Ax + B(-Kx)} = \mathbf{(A-BK)x}
+\end{equation*}
+Note: to make things easier to write we will be describing the states and control input of our linearized model as $\mathbf{x}$ and $\boldsymbol{\tau}$. \\
+
+To verify that the closed-loop system is stable, we need to show that the eigenvalues of the system matrix ($\mathbf{A-BK}$) lie in the left half-plane of the complex plane:
 
 \begin{equation*}
-    A-BK =
+    \mathbf{A-BK} =
     \begin{bmatrix}
-        0           &   0           &   0           &   1/2         &   0           &   0  \\
-        0           &   0           &   0           &   0           &   1/2         &   0  \\
-        0           &   0           &   0           &   0           &   0           &   1/2\\
-        -20/mr^2  &   0           &   0           &   -1/mr^2   &   0           &   0  \\
-        0           &   -20/mr^2  &   0           &   0           &   -1/mr^2   &   0  \\
-        0           &   0           &   -20/mr^2  &   0           &   -1/mr^2   &   0  \\
+        0           &       0           &   0           &       1/2     &       0       &        0       \\
+        0           &       0           &   0           &       0       &       1/2     &        0       \\
+        0           &       0           &   0           &       0       &       0       &       1/2     \\
+        -\frac{20}{mr^2}&   0           &   0           &   -\frac{1}{mr^2}&    0       &        0       \\
+        0           &   -\frac{20}{mr^2}&   0           &       0       &   -\frac{1}{mr^2}&     0       \\
+        0           &       0           &   -\frac{20}{mr^2}&   0       &       0       &   -\frac{1}{mr^2} \\
     \end{bmatrix}
 \end{equation*}
 
-With the help of MATLAB, we find the eigenvalues of $A-BK$:
+With the help of MATLAB, we find the eigenvalues of $\mathbf{A-BK}$:
 
 \begin{equation*}
     \lambda_{1,2,3,4,5,6} = -0.025 \pm 0.025i
 \end{equation*}
 
-The eigenvalues are in the left half-plane, so the closed-loop system with $k_p = 1$ and $k_d = 20$ is stable.
+The eigenvalues lie in the left half-plane, so the closed-loop system with $k_p = 1$ and $k_d = 20$ is stable.
+
+A control system with complex poles reaches the desired state faster than a system with real poles, but the imaginary part of complex poles adds oscillations to the system response. In space, we wish to have a system as stable as possible, with minimal oscillations, due to no friction. \\
+On the other hand, real parts requires more power to give the same response speed as complex poles. Therefore, we would prefer to have complex poles $\alpha \pm j\beta$ with small $\beta$, and hence minimal oscillations. 

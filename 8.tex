@@ -1,5 +1,4 @@
 \section*{Problem 1.8}
 
-
-The main drawback of using unit quaternion over Euler angles is the potential singularities one gets at $\pm 90 \deg$.
-The main drawback of using unit quaternion is that there are four parameters used in a three dimensional space which means we cannot guarantee a unique solution. Therefore we can only define a unique solution locally, not globally.
+The main advantage of using unit quaternions over Euler angles is the fact the they are defined in the whole space. Euler angles have a singularity at $\pm 90 \deg$ in pitch (north-south), therefore we can only guarantee local stability. This is not a big issue when representing horizontal vehicles, like cars and boats. However, when modelling a satellite in space, the chances of this happening are quite large. \\
+The main drawback of using unit quaternions is that there are four parameters used to represent a three dimensional space which means we cannot guarantee a unique representation. Two different unit quaternions can describe the same position.  In addition, these states are quite unintuitive for most people (including the authors of this report). 

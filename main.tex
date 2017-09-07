@@ -2,11 +2,16 @@
 \newcommand\m[1]{\begin{bmatrix}#1\end{bmatrix}}
 \def\bm#1{\mathbf{#1}}
 \usepackage{amsmath}
+\usepackage{gensymb}
 \usepackage{blindtext}
 \usepackage{graphicx}
 \usepackage{amsfonts}
 \usepackage{parskip}    % skip the indent of a new paragraph.
 \usepackage{ulem}       % strikeout
+\usepackage{todonotes}
+\usepackage{booktabs}
+\usepackage{biblatex}
+\bibliography{sources} 
 \newcommand{\MyAuthor}{Heidi Sollie(758511)\\Pierre Husebø Chambenoit(759492)}
 \newcommand{\MyTitle}{Assignment 1, Problem 1}
 \newcommand{\MyHeader}{\MyTitle}
@@ -24,9 +29,11 @@
 \begin{titlepage}
 	\centering
 	\vspace{1cm}
-	{\scshape\Large TTK4190 Guidance and Control of Vehicles\par}
+	{\scshape\Large TTK4190 - Guidance and \\Control of Vehicles\par}
 	\vspace{1.5cm}
 	{\huge\bfseries Assignment 1\par}
+	\vspace{0.25cm}
+	{\Large\bfseries Attitude Control of Satellite\par}
 	\vspace{2cm}
 	{\Large Heidi Sollie, 758511\\Pierre Chambenoit, 759492\par}
     \vfill
@@ -54,5 +61,8 @@
 \include{8}
 \include{hei}
 % % % % % % % % % % % % % % % % % % % % % % % 
+
+\newpage
+\printbibliography
 
 \end{document}
