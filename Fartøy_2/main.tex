@@ -5,6 +5,7 @@
 \usepackage{gensymb}
 \usepackage{blindtext}
 \usepackage{graphicx}
+\graphicspath{ {plots/} }
 \usepackage{amsfonts}
 \usepackage{parskip}    % skip the indent of a new paragraph.
 \usepackage{ulem}       % strikeout
@@ -12,28 +13,24 @@
 \usepackage{booktabs}
 \usepackage{biblatex}
 \bibliography{sources} 
-\newcommand{\MyAuthor}{Heidi Sollie(758511)\\Pierre Husebø Chambenoit(759492)}
-\newcommand{\MyTitle}{Assignment 1, Problem 1}
-\newcommand{\MyHeader}{\MyTitle}
-\newcommand{\MyFag}{TTK4190 Guidance and Control of Vehicles}
+\usepackage{listings}
+\definecolor{mygreen}{rgb}{0,0.5,0.05}
+\lstset{language=Matlab, frame=single, breaklines=true,numbers=left, keywordstyle=\color{blue},rulecolor=\color{black},commentstyle=\color{mygreen}}
 
-\title{\MyFag}
-\title{\MyTitle{}}
-\date{\today}
-\author{}
-
+\title{Fartøy - 2.1.}
+\author{pierrech Pierre Husebø Chambenoit}
+\date{September 2017}
 
 \begin{document}
 
-% % % % % % % % % % % % % % % % % % % % % % % 
 \begin{titlepage}
 	\centering
 	\vspace{1cm}
 	{\scshape\Large TTK4190 - Guidance and \\Control of Vehicles\par}
 	\vspace{1.5cm}
-	{\huge\bfseries Assignment 1\par}
+	{\huge\bfseries Assignment 2\par}
 	\vspace{0.25cm}
-	{\Large\bfseries Attitude Control of Satellite\par}
+	{\Large\bfseries Aircraft Autopilot Design \\with State Estimation\par}
 	\vspace{2cm}
 	{\Large Heidi Sollie, 758511\\Pierre Chambenoit, 759492\par}
     \vfill
@@ -41,28 +38,26 @@
 	{\large \today\par}
 \end{titlepage}
 
-% % % % % % % % % % % % % % % % % % % % % % % 
-\tolerance = 5000
-\hbadness = \tolerance
-\pretolerance = 2000
-
-% % % % % % % % % % % % % % % % % % % % % % % 
-
-
 \newpage
 \setcounter{page}{1}
 \include{1}
-\include{2}
-\include{3}
-\include{4}
-\include{5}
-\include{6}
-\include{7}
-\include{8}
-\include{hei}
-% % % % % % % % % % % % % % % % % % % % % % % 
+\include{2_a}
+\include{2_b}
+\include{2_c}
+\include{2_d}
+\include{2_e}
+\include{2_f}
+\include{2_g}
+
+
+
 
 \newpage
 \printbibliography
 
 \end{document}
+
+
+
+
+

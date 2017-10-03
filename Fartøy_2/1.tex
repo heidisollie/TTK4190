@@ -1,0 +1,112 @@
+\section{Open-loop analysis}
+
+
+
+\subsection{Ground speed}
+From the book \cite{beard}, we know that: 
+\begin{equation*}
+    \mathbf V_a = \mathbf{V}_g - \mathbf{V}_w
+\end{equation*}
+In the absence of wind, the wind speed is $\mathbf V_w = 0$. Therefore, the numerical value of the ground speed of the aircraft is $\mathbf V_g = \mathbf V_a =$  637 km/h $.
+
+
+
+
+\subsection{Crab and sideslip angle}
+The definition of the crab angle $\chi_c$ that depends on aircraft heading is defined below, where $\chi$ is the course angle and $\psi$ is the heading angle.
+\begin{equation*}
+    \chi_c = \chi - \psi
+\end{equation*}
+The other expression of this angle, called the sideslip angle $\beta$, is given below (in the absence of wind speed) and depends on the aircrafts velocity. 
+\begin{equations}
+    \begin{align*}
+        \beta &= \sin^{-1} \Big(\frac{v_r}{\sqrt{u_r^2 + v_r^2 + w_r^2}} \Big), \mathbf{V_a} = \m{u_r\\ v_r\\ w_r\\} = \m{u-u_w \\ v-v_w \\ w-w_w}\\
+        &= \sin^{-1} \Big(\frac{v}{\sqrt{u^2 + v^2 + w^2}} \Big), \mathbf{V_g} = \m{u \\ v \\ w}
+    \end{align*}
+\end{equations}
+
+
+
+
+\subsection{Dutch roll}
+To compute the dutch-roll mode, we neglect the rolling motions\cite{beard}:
+\begin{equation*}
+    \m{\dot \beta \\ \dot r} = \m{-0.322 & -1.12 \\ 6.87 & -0.32} \m{\beta \\ r} + \m{0 \\ 0} \delta^c_a \\
+\end{equation*}
+The characteristic equation is given by:
+\begin{equation*}
+    \det (\mathbf{A} - s\mathbf{I}) =  s^2 + 0.642 s + 7.79744 = 0 
+\end{equation*}
+The equation that gives us the natural frequency $\omega$ and the relative damping ratio $\zeta$ is:
+\begin{equations}
+    \begin{align*}
+        &\dot x + 2\zeta\omega x + \omega^2 = 0\\
+        &\Rightarrow \bigg\{
+        \begin{array}{ll}
+            2 \zeta \omega = 0.642 \\
+            \omega^2 = 7.79744
+        \end{array}\\
+        &\Rightarrow \bigg\{
+        \begin{array}{ll}
+            \omega = \sqrt{7.79744} \approx 2.79239\\
+            \zeta = \frac{0.642}{2 \omega} = \frac{0.642}{2 \sqrt{7.79744}} \approx 0.114955
+        \end{array}
+    \end{align*}
+\end{equations}
+
+The dutch-roll mode is an aircraft motion where the yaw and roll of the aircraft oscillate. Note that this motion is in general stable, so the oscillations decrease over time. With increased relative damping ratio, the oscillations die out quicker. 
+
+
+
+
+\subsection{Spiral divergence mode}
+To compute the spiral divergence mode, we assume that $p = \dot p = 0$:
+\begin{equations}
+    \begin{align*}
+        \dot p &=  -10.6 \beta + 0.46 r -0.65 \delta _a = 0 \\
+        \Rightarrow \beta &= \frac{0.65 \delta_a - 0.46 r}{-10.6} \\
+        \dot r &= 6.87 \beta - 0.32 r -0.02\delta_a \\
+        &= 6.87 (\frac{0.65 \delta_a - 0.46 r}{-10.6}) - 0.32 r - 0.02 \delta_a \\
+        &= 0.02187 r - 0.44127 \delta _a 
+    \end{align*}
+\end{equations}
+
+We obtain the transfer function of the spiral divergence mode by Laplace-transforming the equation of $\dot r$ above:
+\begin{equation*}
+    r(s) = \frac{-0.44127}{s -0.02187} \delta_a
+\end{equation*}
+The system has a positive pole, so it is unstable.
+
+
+
+
+
+\subsection{Roll mode}
+To compute the roll mode, we ignore the heading dynamics and assume a constant pitch angle, $\beta = r = 0$ \cite{beard}:
+\begin{equations}
+    \begin{gather*}
+        \m{
+            \dot p \\ \dot\delta_a
+        }
+        =
+        \m{
+            -2.87   &   -0.65   \\
+            0       &   -10     
+        } 
+        \m{
+            p \\\delta_a
+        }
+        +
+        \m{
+        0\\ 10
+        }
+        \delta_a^c\\
+        \Rightarrow \dot p = -2.87 p - 0.65 \delta_a
+    \end{gather*}
+\end{equations}
+
+The transfer function for the roll mode is:
+\begin{equation} \label{roll_mode}
+    p(s) = -\frac{0.65}{s+2.87} \delta_a(s)
+\end{equation}
+The system has a negative pole, so it is stable. Since the spiral divergence mode was unstable, the roll mode is faster than the spiral divergence mode.

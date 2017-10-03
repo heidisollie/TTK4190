@@ -1,0 +1,49 @@
+\section{Introducing the first controller}
+
+We wish to include a controller matrix K in the expression of $\dot{x}$ such that:
+
+\begin{equation*}
+    \dot{x} = Ax + B\tau = (A - BK) x
+\end{equation*}
+
+To find K, we need to solve $\tau = Kx$:
+
+\begin{equations}
+    \begin{align*}
+        -Kx &= -K_d\omega -k_p\epsilon\\
+        &=
+        \begin{bmatrix}
+            -20\omega_1 -\epsilon_1\\
+            -20\omega_2 -\epsilon_2\\
+            -20\omega_3 -\epsilon_3
+        \end{bmatrix}\\
+        \Rightarrow K &=
+        \begin{bmatrix}
+            20  &   0   &   0   &   1   &   0   &   0\\
+            0   &   20  &   0   &   0   &   1   &   0\\
+            0   &   0   &   20  &   0   &   0   &   1\\
+        \end{bmatrix}
+    \end{align*}
+\end{equations}
+
+To verify that the closed-loop system is stable, we need to verify if the eigenvalues of $A-BK$ are in the left half-plane of the complex plane:
+
+\begin{equation*}
+    A-BK =
+    \begin{bmatrix}
+        0           &   0           &   0           &   1/2         &   0           &   0  \\
+        0           &   0           &   0           &   0           &   1/2         &   0  \\
+        0           &   0           &   0           &   0           &   0           &   1/2\\
+        -20/mr^2  &   0           &   0           &   -1/mr^2   &   0           &   0  \\
+        0           &   -20/mr^2  &   0           &   0           &   -1/mr^2   &   0  \\
+        0           &   0           &   -20/mr^2  &   0           &   -1/mr^2   &   0  \\
+    \end{bmatrix}
+\end{equation*}
+
+With the help of MATLAB, we find the eigenvalues of $A-BK$:
+
+\begin{equation*}
+    \lambda_{1,2,3,4,5,6} = -0.025 \pm 0.025i
+\end{equation*}
+
+The eigenvalues are in the left half-plane, so the closed-loop system with $k_p = 1$ and $k_d = 20$ is stable.

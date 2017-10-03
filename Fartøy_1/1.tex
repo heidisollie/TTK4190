@@ -1,0 +1,103 @@
+\section{Linearization of the satellite model}
+
+\subsection{Finding the A-matrix}
+\begin{equation*}
+\label{eq:dynamics}
+	\begin{aligned}
+		\dot{\mathbf{q}} = \mathbf{T}_q (\mathbf{q} ) \boldsymbol{\omega} \\
+		\mathbf{I}_{CG} \dot{\boldsymbol{\omega}} - \mathbf{S} (\mathbf{I}_{CG} \boldsymbol{\omega} ) \boldsymbol{\omega} & =  \boldsymbol{\tau}
+	\end{aligned}	
+\end{equation*}
+
+The first equation of motion of the satellite is the following:
+
+\begin{equation*}
+    \dot{q} = T_q(q)\omega
+\end{equation*}
+
+
+To find the equilibrium point at $q = [\eta,\epsilon_1,\epsilon_2,\epsilon_3]^T = [1,0,0,0]^T$, we set $\dot{q} = 0$:
+
+\begin{equations}
+    \begin{align*}
+        &\dot{q} = 0\\
+        &\Rightarrow T_q(q)\omega = 0\\
+        &\Rightarrow \frac{1}{2}
+        \begin{bmatrix}
+            -\epsilon^T\\
+            \eta I_{3x3} + S(\epsilon)
+        \end{bmatrix}
+        \omega = 0\\
+        &\Rightarrow \frac{1}{2}
+        \begin{bmatrix}
+            0   &   0   &   0\\
+            1   &   0   &   0\\
+            0   &   1   &   0\\
+            0   &   0   &   1\\  
+        \end{bmatrix}
+        \omega = 0\\
+        &\Rightarrow \omega = [\omega_1,\omega_2,\omega_3]^T = [0,0,0]^T
+    \end{align*}
+\end{equations}
+
+The equilibrium point corresponding to $q = [\eta,\epsilon_1,\epsilon_2,\epsilon_3]^T = [1,0,0,0]^T$ is $x_0 = [\epsilon_1,\epsilon_2,\epsilon_3,\omega_1,\omega_2,\omega_3]^T = [0,0,0,0,0,0]^T$
+
+
+We then find A by linearizing the satellite about $x = x_0$:
+
+\begin{equation*}
+    A =
+    \begin{bmatrix}
+        \frac{\delta\dot{x}_1}{\delta x_1}  &   \cdots  &   \frac{\delta\dot{x}_1}{\delta x_6}\\
+        \vdots                              &   \ddots  &   \vdots\\
+        \frac{\delta\dot{x}_6}{\delta x_1}  &   \cdots  &   \frac{\delta\dot{x}_6}{\delta x_6}
+    \end{bmatrix}\Biggr|_{x=x_0}
+    =
+    \begin{bmatrix}
+        0   &   0   &   0   &   \frac{1}{2} &   0           &   0\\
+        0   &   0   &   0   &   0           &   \frac{1}{2} &   0\\
+        0   &   0   &   0   &   0           &   0           &   \frac{1}{2}\\
+        0   &   0   &   0   &   0           &   0           &   0\\
+        0   &   0   &   0   &   0           &   0           &   0\\
+        0   &   0   &   0   &   0           &   0           &   0\\
+    \end{bmatrix}
+\end{equation*}
+
+
+
+
+\subsection{Finding the B-matrix}
+
+The second equation of motion of the satellite is the following:
+
+\begin{equation*}
+    I_{CG}\dot{\omega} - S(I_{CG}\omega)\omega = \tau
+\end{equation*}
+
+The cross product of a vector with itself, $\omega\times\omega = S(\omega)\omega$, is always equal to zero. We can use this to simplify the second equation of motion:
+
+\begin{equation*}
+    I_{CG}\dot\omega = \tau\\
+    \Rightarrow \dot\omega = I_{CG}^{-1}\tau
+\end{equation*}
+
+We then find B by linearizing the satellite about $x = x_0$:
+
+\begin{equation*}
+    B =
+    \begin{bmatrix}
+        \frac{\delta\dot{x}_1}{\delta \tau_1}  &   \cdots  &   \frac{\delta\dot{x}_1}{\delta\tau_3}\\
+        \vdots                              &   \ddots  &   \vdots\\
+        \frac{\delta\dot{x}_6}{\delta \tau_1}  &   \cdots  &   \frac{\delta\dot{x}_6}{\delta \tau_3}
+    \end{bmatrix}\Biggr|_{x=x_0}
+    =
+    \begin{bmatrix}
+        0       &   0       &   0       \\
+        0       &   0       &   0       \\
+        0       &   0       &   0       \\
+        1/mr^2  &   0       &   0       \\
+        0       &   1/mr^2  &   0       \\
+        0       &   0       &   1/mr^2  \\
+    \end{bmatrix}
+\end{equation*}
+
